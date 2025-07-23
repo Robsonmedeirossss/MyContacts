@@ -1,0 +1,75 @@
+.contacts{
+    width: 100%;
+}
+
+.search{
+    height: 50px;
+    border-radius: 25px;
+    background-color: var(--white);
+    border: 2px solid var(--white);
+    width: 100%;
+    padding: 0 16px;
+    outline: none;
+    margin-bottom: 32px;
+    transition: .2s;
+}
+
+.search::placeholder{
+    color: var(--text-color-200);
+}
+
+.search:focus{
+    border-color: var(--primary-color-main);
+}
+
+.headerContacts{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.headerContacts > strong{
+    font-size: 24px;
+    color: var(--text-color-900);
+}
+
+.headerContacts > a{
+    text-decoration: none;
+    color: var(--primary-color-main);
+    border: 2px solid var(--primary-color-main);
+    padding: .6rem;
+    transition: all .2s ease-in;
+}
+
+.headerContacts > a:hover{
+    background-color: var(--primary-color-main);
+    color: var(--white);
+}
+
+.line{
+    color: var(--text-color-200);
+    margin: 16px 0;
+}
+
+.headerList{
+    margin-bottom: 8px;
+}
+
+.headerList > button{
+    background-color: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.headerList > button > span{
+    font-weight: bold;
+    color: var(--primary-color-main);
+}
+
+.containerCards{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}

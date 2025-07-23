@@ -1,0 +1,41 @@
+.card{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--white);
+    padding: 16px;
+}
+
+.info{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.infoName{
+    display: flex;
+    gap: 8px;
+}
+
+.infoName > strong{
+    color: var(--text-color-900);
+}
+
+.infoName > span{
+    font-size: 12px;
+    color: var(--primary-color-main);
+    font-weight: bold;
+    background-color: var(--background-color-light);
+    padding: 3px 6px;
+}
+
+.actions{
+ display: flex;
+ align-items: center;   
+ gap: 1px;
+}
+
+.actions > button{
+    background-color: transparent;
+    border: none;
+}

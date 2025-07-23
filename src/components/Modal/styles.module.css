@@ -1,0 +1,41 @@
+.overlay{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(34, 34, 34, 0.6);
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.overlay > .boxModal{
+    padding: 24px;
+    background-color: var(--white);
+    border-radius: 4px;
+    max-width: 450px;
+    width: 100%;
+}
+
+.overlay > .boxModal > h2{
+    color: var(--danger-color-main);
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.overlay > .boxModal > footer{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 32px;
+}
+
+.cancelButton{
+    background-color: transparent;
+    border: none;
+    color: var(--text-color-200);
+    height: 40px;
+    font-size: 18px;
+}

@@ -1,0 +1,8 @@
+.form{
+    display: grid;
+    gap: 16px;
+}
+
+.form > button{
+    width: 100%;
+}

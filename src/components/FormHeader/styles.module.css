@@ -1,0 +1,25 @@
+.header{
+    margin-bottom: 24px;
+}
+
+.header > a{
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    margin-bottom: 8px;
+    color: var(--primary-color-main);
+    gap: 8px;
+    transition: .2s ease-in;
+}
+
+.header > a:hover{
+    transform: scale(101%)
+}
+
+.header > a > img{
+    transform: rotate(-90deg);
+}
+
+.header > h2{
+    font-size: 24px;
+}
