@@ -17,6 +17,15 @@ function Form({buttonLabel}){
     const [category, setCategory] = useState('');
     const [errors, setErrors] = useState([]);
 
+    function handleSubmit(event){
+        event.preventDefault();
+
+        if(errors.length){
+            return alert('Erros');
+        }
+        console.log({name, email, phone, category})
+    }
+
     function handleNameChange(event){
         setName(event.target.value);
 
@@ -34,9 +43,12 @@ function Form({buttonLabel}){
     }
 
     function handleEmailChange(event){
-        setEmail(event.target.value);
 
-        if(event.target.value && !isEmailValid(email)){
+        const newEmailValue = event.target.value;
+
+        setEmail(newEmailValue);
+
+        if(newEmailValue && !isEmailValid(newEmailValue)){
             const errorAlreadyExist = errors.find(error => (
                 error.field === 'email'
             ));
@@ -58,9 +70,12 @@ function Form({buttonLabel}){
     }
 
     function handlePhoneChange(event){
-        setPhone(event.target.value);
 
-        if(event.target.value && !isPhoneValid(phone)){
+        const newPhoneValue = event.target.value;
+        
+        setPhone(newPhoneValue);
+
+        if(newPhoneValue && !isPhoneValid(newPhoneValue)){
             const errorAlreadyExist = errors.find(error => (
                 error.field === 'phone'
             ));
@@ -79,28 +94,46 @@ function Form({buttonLabel}){
         }
     }
 
+    function handleCategoryChange(event){
+        setCategory(event.target.value);
+        console.log(event.target.value);
+    }
+
+    function getErrorMessageByFieldMessage(fieldName){
+        return errors.find(error => (
+            error.field === fieldName
+        ))?.error
+    }
+
     return(
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit}>
             {console.log(errors)}
             <Input 
                 type="text" 
                 placeholder="Nome"
                 value={name} 
                 onChange={handleNameChange}
+                error={getErrorMessageByFieldMessage('name')}
             />
             <Input 
                 type="text"
                 placeholder="Email"
                 value={email}
                 onChange={handleEmailChange}
+                error={getErrorMessageByFieldMessage('email')}
             />
             <Input
                 type="text"
                 placeholder="Telefone"
                 value={phone}
                 onChange={handlePhoneChange}
+                error={getErrorMessageByFieldMessage('phone')}
             />
-            <Select placeholder="Nome"/>
+            <Select 
+                placeholder="Nome" 
+                value={category} 
+                onChange={handleCategoryChange}
+            />
             <Button>{buttonLabel}</Button>
         </form>
     )

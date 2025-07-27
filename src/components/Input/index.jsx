@@ -1,10 +1,22 @@
 import styles from './styles.module.css';
 
-function Input({type, placeholder, error, onChange, ...rest}){
+function Input({type, placeholder, error, onChange, value, ...rest}){
+
+    const inputClasses = error ? 
+        `${styles.containerInput} ${styles.containerInputError}` 
+        : 
+        `${styles.containerInput} ${styles.containerInputSucess}`;
+
+
     return(
-       <div className={styles.containerInput}>
-             <input type={type} placeholder={placeholder} onChange={onChange}/>
-             {error && <small>Campo inválido</small>}
+       <div className={inputClasses}>
+             <input 
+                type={type} 
+                placeholder={placeholder} 
+                onChange={onChange}
+                value={value}
+             />
+             {error && <small>{error}</small>}
        </div>
     );
 }

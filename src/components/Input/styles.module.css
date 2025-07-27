@@ -12,13 +12,20 @@
     transition: border .2s ease-in;
 }
 
-.containerInput > input:focus{
-    border: 2px solid var(--primary-color-main);
-}
-
 .containerInput > input::placeholder{
     color: var(--text-color-200);
 }
 
+.containerInputSucess > input:focus{
+    border: 2px solid var(--primary-color-main);
+}
+
+.containerInputError > input{
+    border: 2px solid var(--danger-color-main);
+}
+
+.containerInputError > small{
+    color: var(--danger-color-main);
+}
 
 
