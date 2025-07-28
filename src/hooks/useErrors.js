@@ -4,10 +4,10 @@ function useErrors(){
 
     const [errors, setErrors] = useState([]);
     
-    function setError({ field, error }){
+    function addError({ field, error }){
         
         const errorAlreadyExist = errors.find(error => (
-            error.field === fieldName
+            error.field === field
         ))
 
         if (errorAlreadyExist) return;
@@ -18,15 +18,21 @@ function useErrors(){
     }
 
     function removeErrorByFieldName(fieldName){
-
+        setErrors(prevState => (
+            prevState.filter(error => (
+                error.field !== fieldName
+            ))
+        ))
     }
 
     function getErrorMessageByFieldName(fieldName){
-
+        return errors.find(error => (
+            error.field === fieldName
+        )).error
     }  
 
     return { 
-        setError, 
+        addError, 
         removeErrorByFieldName, 
         getErrorMessageByFieldName 
     }
