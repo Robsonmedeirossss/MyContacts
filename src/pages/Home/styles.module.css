@@ -28,6 +28,18 @@
     justify-content: space-between;
 }
 
+.headerError{
+    justify-content: flex-end;
+}
+
+.headerNoHasContacts{
+    justify-content: center;
+}
+
+.headerError{
+    justify-content: flex-end;
+}
+
 .headerContacts > strong{
     font-size: 24px;
     color: var(--text-color-900);
@@ -68,8 +80,59 @@
     color: var(--primary-color-main);
 }
 
+.headerList > button > img{
+    transition: .2s ease-in;
+}
+
+.desc{
+    transform: rotate(180deg);
+}
+
 .containerCards{
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
+
+.containerHasError{
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.containerHasError strong{
+    color: var(--danger-color-main);
+    font-size: 22px;
+}
+
+.containerHasError button{
+    margin-top: 8px;
+}
+
+.containerHasError div{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.containerEmptyBox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.containerEmptyBox img{
+    margin-top: 8px;
+}
+
+.containerEmptyBox strong{
+    color: var(--primary-color-dark);
+}
+
+.containerNoFilteredContacts{
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-top: 32px;
+    word-break: break-word;
 }

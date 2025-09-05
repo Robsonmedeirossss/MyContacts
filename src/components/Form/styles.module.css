@@ -3,6 +3,29 @@
     gap: 16px;
 }
 
-.form > button{
+.form > button, .form > .containerSelect, .form > div > select{
     width: 100%;
+}
+
+.containerSelect{
+    position: relative;
+}
+
+.containerSelect select{
+    height: 50px;
+    background-color: var(--white);
+    border-radius: 4px;
+    border: 2px solid var(--white);
+    padding: 0 16px;
+    outline: none;
+    transition: border .2s ease-in;
+}
+
+.containerSelect select[disabled]{
+    background-color: var(--text-color-100);
+    border-color: var(--text-color-200);
+}
+
+.containerSelect select:focus{
+    border: 2px solid var(--primary-color-main);
 }

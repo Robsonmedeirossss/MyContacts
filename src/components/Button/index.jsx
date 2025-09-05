@@ -1,12 +1,21 @@
 import styles from './styles.module.css';
 
-function Button({children, variant = 'primary'}){
+import Spinner from '../Spinner';
 
-    const buttonClasses = `${styles.button} ${styles[variant]}`
+function Button({children, variant = 'primary', disabled, onClick, isLoading}){
 
+    const buttonClasses = disabled 
+    ? `${styles.button} ${styles.disabled}`
+    :`${styles.button} ${styles[variant]}`
+    
     return(
-        <button type="submit" className={buttonClasses}>
-            {children}
+        <button 
+            type="submit"
+            onClick={onClick}
+            className={buttonClasses}
+            disabled={disabled || isLoading}
+        >
+            {isLoading? <Spinner  isLoading={isLoading} isLarge={false}/> : children}
         </button>
     );
 } 

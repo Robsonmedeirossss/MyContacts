@@ -1,6 +1,6 @@
 import styles from './styles.module.css';
 
-function Input({type, placeholder, error, onChange, value, ...rest}){
+function Input({type, placeholder, error, onChange, value, max, disabled}){
 
     const inputClasses = error ? 
         `${styles.containerInput} ${styles.containerInputError}` 
@@ -15,6 +15,8 @@ function Input({type, placeholder, error, onChange, value, ...rest}){
                 placeholder={placeholder} 
                 onChange={onChange}
                 value={value}
+                maxLength={max? max : 80}
+                disabled={disabled}
              />
              {error && <small>{error}</small>}
        </div>

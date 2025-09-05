@@ -6,11 +6,15 @@
     font-size: 16px;
     transition: background .2s ease-in;
     border: none;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .primary{
     background-color: var(--primary-color-main);
-    width: 100%;
+    /* width: 100%; */
 }
 
 .primary:hover{
@@ -31,4 +35,9 @@
 
 .danger:active{
     background-color: var(--danger-color-dark);
+}
+
+.disabled{
+    background-color: var(--text-color-200);
+    cursor: default;
 }

@@ -5,16 +5,16 @@ import trash from '../../assets/images/icons/trash.svg';
 
 import { Link } from 'react-router-dom';
 
-function Card(){
+function Card({name, email, phone, category}){
     return(
         <div className={styles.card}>
             <div className={styles.info}>
                 <div className={styles.infoName}>
-                    <strong>Robson Medeiros</strong>
-                    <span>Instagram</span>
+                    <strong>{name}</strong>
+                    {category && (<span>{category}</span>)}
                 </div>
-                <span>robsonmedeiros125@gmail.com</span>
-                <span>(85) 99718 8216</span>
+                <span>{email}</span>
+                <span>{phone}</span>
             </div>
             <div className={styles.actions}>
                 <Link to="/edit/123">

@@ -28,10 +28,11 @@ function useErrors(){
     function getErrorMessageByFieldName(fieldName){
         return errors.find(error => (
             error.field === fieldName
-        )).error
+        ))?.error
     }  
 
     return { 
+        errors,
         addError, 
         removeErrorByFieldName, 
         getErrorMessageByFieldName 

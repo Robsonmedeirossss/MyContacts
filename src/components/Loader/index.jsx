@@ -2,11 +2,15 @@ import { createPortal } from "react-dom";
 
 import styles from './styles.module.css';
 
-function Loader(){
+import Spinner from "../Spinner";
+
+function Loader({isLoading}){
+    if(!isLoading) return null;
+    
     return(
         createPortal(
             <div className={styles.overlay}>
-                <div className={styles.loader}></div>
+                <Spinner isLoading={isLoading} isLarge={true}/>
             </div>,
             document.getElementById('loader-root')
         )

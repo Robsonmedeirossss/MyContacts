@@ -28,4 +28,7 @@
     color: var(--danger-color-main);
 }
 
-
+.containerInput > input[disabled]{
+    background-color: var(--text-color-100);
+    border-color: var(--text-color-200);
+}

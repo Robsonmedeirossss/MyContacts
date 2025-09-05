@@ -1,44 +1,47 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Input from "../Input";
-import Select from "../Select";
 import Button from "../Button";
+import Spinner from "../Spinner";
 
 import isEmailValid from '../../utils/isEmailValid';
-import isPhoneValid from "../../utils/isPhoneValid";
+import formatPhone from "../../utils/formatPhone";
+import useErrors from "../../hooks/useErrors";
+import CategoriesService from "../../services/CategoriesService";
 
 import styles from './styles.module.css';
 
-function Form({buttonLabel}){
+
+function Form({buttonLabel, onSubmit}){
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
-    const [category, setCategory] = useState('');
-    const [errors, setErrors] = useState([]);
+    const [categoriesList, setCategoriesList] = useState([]);
+    const [categoryId, setCategory] = useState('');
+    const [isLoadingCategories, setIsLoadingCategories] = useState(true);
+    const [isSubmiting, setIsSubmiting] = useState(false);
 
-    function handleSubmit(event){
+
+    const { errors, addError, removeErrorByFieldName, getErrorMessageByFieldName } = useErrors();
+
+    async function handleSubmit(event){
         event.preventDefault();
 
-        if(errors.length){
-            return alert('Erros');
-        }
-        console.log({name, email, phone, category})
+        setIsSubmiting(true);
+
+        await onSubmit({name, email, phone, categoryId});
+
+        setIsSubmiting(false);
     }
 
     function handleNameChange(event){
         setName(event.target.value);
 
         if(!event.target.value){
-            setErrors(prevState => (
-                [...prevState, { field: 'name', error: 'Nome é obrigatório' }]
-            ))
+            addError({field: 'name', error: 'Nome é obrigatório'})
         }else{
-            setErrors(prevState => (
-                prevState.filter(error => (
-                    error.field !== 'name'
-                ))
-            ))
+            removeErrorByFieldName('name');
         }
     }
 
@@ -49,92 +52,81 @@ function Form({buttonLabel}){
         setEmail(newEmailValue);
 
         if(newEmailValue && !isEmailValid(newEmailValue)){
-            const errorAlreadyExist = errors.find(error => (
-                error.field === 'email'
-            ));
-
-            if(errorAlreadyExist){
-                return;
-            }
-
-            setErrors(prevState => (
-                [...prevState, { field: 'email', error: 'E-mail inválido' }]
-            ))
+            addError({field: 'email', error: 'Digite um email válido'})
         }else{
-            setErrors(prevState => (
-                prevState.filter(error => (
-                    error.field !== 'email'
-                ))
-            ))
+            removeErrorByFieldName('email');
         }
     }
 
     function handlePhoneChange(event){
-
-        const newPhoneValue = event.target.value;
-        
-        setPhone(newPhoneValue);
-
-        if(newPhoneValue && !isPhoneValid(newPhoneValue)){
-            const errorAlreadyExist = errors.find(error => (
-                error.field === 'phone'
-            ));
-
-            if(errorAlreadyExist) return;
-
-            setErrors(prevState => (
-                [...prevState, { field: 'phone', error: 'Telefone inválido' }]
-            ))
-        }else{
-            setErrors(prevState => (
-                prevState.filter(error => (
-                    error.field !== 'phone'
-                ))
-            ))
-        }
+        setPhone(formatPhone(event.target.value));
     }
 
     function handleCategoryChange(event){
         setCategory(event.target.value);
-        console.log(event.target.value);
     }
 
-    function getErrorMessageByFieldMessage(fieldName){
-        return errors.find(error => (
-            error.field === fieldName
-        ))?.error
+    async function loadCategories(){
+        setIsLoadingCategories(true);
+        try {
+            const { categories } = await CategoriesService.getCategories();
+            setCategoriesList(categories);
+        } catch{
+
+        }finally{
+            setIsLoadingCategories(false);
+        }
     }
+
+    useEffect(() => {
+        loadCategories();
+    }, [])
+
+    const isFormValid = Boolean((name && errors.length === 0));
 
     return(
-        <form className={styles.form} onSubmit={handleSubmit}>
-            {console.log(errors)}
+        <form className={styles.form} onSubmit={handleSubmit} noValidate>
             <Input 
                 type="text" 
-                placeholder="Nome"
+                placeholder="Nome*"
                 value={name} 
                 onChange={handleNameChange}
-                error={getErrorMessageByFieldMessage('name')}
+                error={getErrorMessageByFieldName('name')}
+                disabled={isSubmiting}
             />
             <Input 
-                type="text"
+                type="email"
                 placeholder="Email"
                 value={email}
                 onChange={handleEmailChange}
-                error={getErrorMessageByFieldMessage('email')}
+                error={getErrorMessageByFieldName('email')}
+                disabled={isSubmiting}
             />
             <Input
                 type="text"
                 placeholder="Telefone"
                 value={phone}
                 onChange={handlePhoneChange}
-                error={getErrorMessageByFieldMessage('phone')}
+                max="15"
+                disabled={isSubmiting}
             />
-            <Select 
-                placeholder="Nome" 
-                value={category} 
-                onChange={handleCategoryChange}
-            />
-            <Button>{buttonLabel}</Button>
+            <div className={styles.containerSelect}>
+                <select onChange={handleCategoryChange} disabled={isLoadingCategories || isSubmiting}>
+                    <option value="">Sem categoria</option>
+                    {categoriesList.map(categoryObject => (
+                        <option
+                            key={categoryObject.id}
+                            value={categoryObject.id}
+                        >
+                        {categoryObject.name}
+                        </option>
+                    ))}
+                </select>
+                    <Spinner isLoading={isLoadingCategories} isLarge={false}/>
+            </div>
+
+            <Button disabled={!isFormValid || isSubmiting} isLoading={isSubmiting}>{buttonLabel}</Button>
+
         </form>
     )
 }
