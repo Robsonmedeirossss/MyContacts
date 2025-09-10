@@ -7,10 +7,10 @@ class ContactsService{
     }
 
     listContacts(orderBy = 'asc'){
-       return this.httpClient.get(`/contacts?orderBy=${orderBy}`, {});
+       return this.httpClient.get(`/contacts?orderBy=${orderBy}`);
     }
 
-    getContact(id){
+    getContactById(id){
         return this.httpClient.get(`/contacts/${id}`);
     }
 
@@ -21,6 +21,16 @@ class ContactsService{
                 Authorization: 'meutoken'
             }
         });
+    }
+
+    updateContactById(userData, id){
+        return this.httpClient.put(`/contacts/${id}`, {
+            body: userData,
+        })
+    }
+
+    deleteContactById(id){
+        return this.httpClient.delete(`/contacts/${id}`)
     }
 }
 

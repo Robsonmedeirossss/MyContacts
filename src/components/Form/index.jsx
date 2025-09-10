@@ -10,18 +10,27 @@ import useErrors from "../../hooks/useErrors";
 import CategoriesService from "../../services/CategoriesService";
 
 import styles from './styles.module.css';
+import useSafeAsyncState from "../../hooks/useSafeAsyncState";
 
 
-function Form({buttonLabel, onSubmit}){
+function Form({buttonLabel, onSubmit, contact = {}, formType}){
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
-    const [categoriesList, setCategoriesList] = useState([]);
     const [categoryId, setCategory] = useState('');
-    const [isLoadingCategories, setIsLoadingCategories] = useState(true);
+    const [categoriesList, setCategoriesList] = useSafeAsyncState([]);
+    const [isLoadingCategories, setIsLoadingCategories] = useSafeAsyncState(true);
     const [isSubmiting, setIsSubmiting] = useState(false);
 
+    useEffect(() => {
+        if(contact.id){
+            setName(contact.name || '');
+            setEmail(contact.email || '');
+            setPhone(formatPhone(contact.phone) || '');
+            setCategory(contact.category_id || '');
+        }
+    }, [contact]);
 
     const { errors, addError, removeErrorByFieldName, getErrorMessageByFieldName } = useErrors();
 
@@ -33,6 +42,13 @@ function Form({buttonLabel, onSubmit}){
         await onSubmit({name, email, phone, categoryId});
 
         setIsSubmiting(false);
+
+        if(formType === "create"){
+            setName('');
+            setEmail('');
+            setPhone('');
+            setCategory('');
+        }
     }
 
     function handleNameChange(event){
@@ -111,7 +127,7 @@ function Form({buttonLabel, onSubmit}){
                 disabled={isSubmiting}
             />
             <div className={styles.containerSelect}>
-                <select onChange={handleCategoryChange} disabled={isLoadingCategories || isSubmiting}>
+                <select value={categoryId} onChange={handleCategoryChange} disabled={isLoadingCategories || isSubmiting}>
                     <option value="">Sem categoria</option>
                     {categoriesList.map(categoryObject => (
                         <option
@@ -122,7 +138,6 @@ function Form({buttonLabel, onSubmit}){
                         </option>
                     ))}
                 </select>
-                    <Spinner isLoading={isLoadingCategories} isLarge={false}/>
             </div>
 
             <Button disabled={!isFormValid || isSubmiting} isLoading={isSubmiting}>{buttonLabel}</Button>

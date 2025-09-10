@@ -12,8 +12,12 @@ import magnifierQuestion from '../../assets/images/icons/magnifier-question.svg'
 
 import Loader from '../../components/Loader';
 import Button from '../../components/Button';
+import Modal from '../../components/Modal';
+
+import toast from '../../utils/addToast';
 
 import ContactsService from '../../services/ContactsService';
+import addToast from '../../utils/addToast';
 
 function Home(){
     const [contacts, setContacts] = useState([]);
@@ -21,6 +25,9 @@ function Home(){
     const [searchItem, setSearchItem] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
+    const [contactBeingDeleted, setContactBeingDeleted] = useState(null);
+    const [modalDeleteIsVisible, setModalDeleteIsVisible] = useState(false);
+    const [isLoadingDeleteContact, setIsLoadingDeleteContact] = useState(false);
     const filteredContacts = useMemo(() => contacts.filter(contact => (
             contact.name.toUpperCase().includes(searchItem.toUpperCase())
         )), [contacts, searchItem]);
@@ -63,12 +70,61 @@ function Home(){
         loadContacts();
     }
 
+    function handleOpenModalDeleteContact(contact){
+        setModalDeleteIsVisible(true);
+        setContactBeingDeleted(contact);
+    }
+
+    function handleCancelModalButton(){
+        setModalDeleteIsVisible(false);
+    }
+
+    async function handleDeleteContact(){
+        try {
+            setIsLoadingDeleteContact(true);
+
+            await ContactsService.deleteContactById(contactBeingDeleted.id);
+
+            setIsLoadingDeleteContact(false);
+
+            setContacts(prevState => (
+                prevState.filter(contact => contact.id !== contactBeingDeleted.id)
+            ));
+            
+            setContactBeingDeleted(null);
+            handleCancelModalButton();
+            addToast({
+                type: 'sucess',
+                text: 'Contato deletado com sucesso'
+            })
+        } catch (error) {
+            addToast({
+                type: 'danger',
+                text: 'Erro ao deletar o contato'
+            })
+        }
+    }
+
     const hasContacts = !hasError && contacts.length > 0;
 
     return(
         <>
+            <Modal
+                title={`Tem certeza que deseja remover o contato ${contactBeingDeleted?.name}`}
+                type='danger'
+                visible={modalDeleteIsVisible}
+                labelCancelButton="Cancelar"
+                labelConfirmButton="Deletar"
+                onClickCancel={handleCancelModalButton}
+                onClickConfirm={handleDeleteContact}
+                isLoading={isLoadingDeleteContact}
+            >
+                Essa ação não poderá ser desfeita
+            </Modal>
+            
             <Loader isLoading={isLoading} />  
             <section className={styles.contacts}>
+            
                
                 {hasContacts &&(
                     <input 
@@ -121,10 +177,12 @@ function Home(){
                         {filteredContacts.map(contact => (
                             <Card 
                                 key={contact.id}
+                                id={contact.id}
                                 name={contact.name}
                                 email={contact.email}
                                 phone={contact.phone}
                                 category={contact.category_name}
+                                onClickDeletedButton={() => handleOpenModalDeleteContact(contact)}
                             />
                         ))}
                     </div>

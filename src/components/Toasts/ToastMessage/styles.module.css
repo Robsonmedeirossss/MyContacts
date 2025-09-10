@@ -7,6 +7,8 @@
     justify-content: center;
     gap: 8px;
     color: var(--white);
+    cursor: pointer;
+    transition: all .2s ease-in-out;
 }
 
 .sucess{

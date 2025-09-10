@@ -2,7 +2,7 @@ import styles from './styles.module.css';
 
 import Spinner from '../Spinner';
 
-function Button({children, variant = 'primary', disabled, onClick, isLoading}){
+function Button({children, variant = 'default', disabled, onClick, isLoading}){
 
     const buttonClasses = disabled 
     ? `${styles.button} ${styles.disabled}`

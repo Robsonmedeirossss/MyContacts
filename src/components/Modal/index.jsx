@@ -1,22 +1,53 @@
-import { createPortal } from 'react-dom';
-
 import styles from './styles.module.css';
 
 import Button from '../Button'; 
+import ReactPortal from '../ReactPortal';
 
-function Modal(){
+function Modal({
+    title,
+    children, 
+    type = 'default', 
+    visible, 
+    labelCancelButton,
+    labelConfirmButton,
+    onClickConfirm, 
+    onClickCancel,
+    isLoading,
+    }){
+
+    if(!visible){
+        return null;
+    }
+
+    const stylesVariant = type === 'danger'
+        ? `${styles.danger}`
+        : '';
+
     return (
-        createPortal(<div className={styles.overlay}>
-            <div className={styles.boxModal}>
-                <h2>Tem certeza que deseja remover o contato ”Mateus Silva”?</h2>
-                <p>Esta ação não poderá ser desfeita!</p>
+        <ReactPortal containerId="modal-root">
+            <div className={styles.overlay}>
+                <div className={`${styles.boxModal} ${stylesVariant}`}>
+                <h2>{title}</h2>
+                {children}
                 <footer>
-                    <button className={styles.cancelButton}>Cancelar</button>
-                    <Button variant='danger'>Deletar</Button>
+                    <button 
+                        className={styles.cancelButton} 
+                        onClick={onClickCancel}
+                        disabled={isLoading}
+                    >
+                        {labelCancelButton}
+                    </button>
+                    <Button 
+                        variant={type} 
+                        onClick={onClickConfirm}
+                        isLoading={isLoading}
+                    >
+                        {labelConfirmButton}
+                    </Button>
                 </footer>
+                </div>
             </div>
-    </div>,
-    document.getElementById('modal-root'))
+        </ReactPortal>
     )
 }
 

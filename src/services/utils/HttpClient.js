@@ -22,9 +22,24 @@ class HttpClient{
         })
     }
 
+    put(path, options){
+        return this.makeRequest(path, {
+            body: JSON.stringify(options?.body),
+            method: 'PUT',
+            headers: options?.headers
+        })
+    }
+
+    delete(path, options){
+        return this.makeRequest(path, {
+            method: 'DELETE',
+            headers: options?.header
+        })
+    }
+
     async makeRequest(path, options){
         
-        await delay(500);
+        await delay(3000);
 
         const headers = new Headers();
 
@@ -44,10 +59,11 @@ class HttpClient{
             headers,
         });
 
+
         const contentType = response.headers.get('Content-Type');
         let body = null;
 
-        if(contentType.includes('application/json')){
+        if(contentType?.includes('application/json')){
             body = await response.json();
         }
 
@@ -55,7 +71,8 @@ class HttpClient{
             return body;
         }
 
-        throw new APIError(response, body);
+
+        throw new APIError(response, body);    
     }
 
 }

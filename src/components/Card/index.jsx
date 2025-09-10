@@ -5,7 +5,7 @@ import trash from '../../assets/images/icons/trash.svg';
 
 import { Link } from 'react-router-dom';
 
-function Card({name, email, phone, category}){
+function Card({id, name, email, phone, category, onClickDeletedButton}){
     return(
         <div className={styles.card}>
             <div className={styles.info}>
@@ -17,10 +17,10 @@ function Card({name, email, phone, category}){
                 <span>{phone}</span>
             </div>
             <div className={styles.actions}>
-                <Link to="/edit/123">
+                <Link to={`/edit/${id}`}>
                     <img src={edit} alt="edit icon" />
                 </Link>
-                <button>
+                <button onClick={onClickDeletedButton}>
                     <img src={trash} alt="trash icon" />
                 </button>
             </div>

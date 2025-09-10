@@ -6,7 +6,6 @@ import ToastContainer from '../Toasts/ToastContainer';
 
 import styles from './styles.module.css';
 
-import '../../lib/EventManager';
 
 function App(){
     return(
