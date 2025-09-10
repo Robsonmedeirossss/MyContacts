@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import FormHeader from "../../components/FormHeader";
 import Form from "../../components/Form";
 
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import ContactsService from "../../services/ContactsService";
 import addToast from "../../utils/addToast";
@@ -16,7 +16,7 @@ function EditContact(){
     const isMounted = useIsMounted();
 
     const { id } = useParams();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function loadContact(){
@@ -31,17 +31,17 @@ function EditContact(){
 
             } catch {
                 if(isMounted()){
-                    history.push('/');
+                    navigate('/');
                     addToast({
                         type: 'danger',
                         text: 'Contato não encontrado'
-                    })
+                    });
                 }
-             }
+            }
         }
 
         loadContact();
-    }, []);
+    }, [id, navigate, isMounted]);
 
     async function handleSubmit({name, phone, email, categoryId}){
         const newDataUser = {

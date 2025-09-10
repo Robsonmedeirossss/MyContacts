@@ -11,6 +11,7 @@ import CategoriesService from "../../services/CategoriesService";
 
 import styles from './styles.module.css';
 import useSafeAsyncState from "../../hooks/useSafeAsyncState";
+import useIsMounted from "../../hooks/useIsMounted";
 
 
 function Form({buttonLabel, onSubmit, contact = {}, formType}){
@@ -22,6 +23,7 @@ function Form({buttonLabel, onSubmit, contact = {}, formType}){
     const [categoriesList, setCategoriesList] = useSafeAsyncState([]);
     const [isLoadingCategories, setIsLoadingCategories] = useSafeAsyncState(true);
     const [isSubmiting, setIsSubmiting] = useState(false);
+    const isMounted = useIsMounted();
 
     useEffect(() => {
         if(contact.id){
@@ -86,11 +88,16 @@ function Form({buttonLabel, onSubmit, contact = {}, formType}){
         setIsLoadingCategories(true);
         try {
             const { categories } = await CategoriesService.getCategories();
-            setCategoriesList(categories);
+            
+            if(isMounted()){
+                setCategoriesList(categories);
+            }
         } catch{
 
         }finally{
-            setIsLoadingCategories(false);
+            if(isMounted){
+                setIsLoadingCategories(false);
+            }
         }
     }
 

@@ -39,7 +39,7 @@ class HttpClient{
 
     async makeRequest(path, options){
         
-        await delay(3000);
+        await delay(500);
 
         const headers = new Headers();
 
