@@ -41,7 +41,7 @@ function EditContact(){
         }
 
         loadContact();
-    }, [id, navigate, isMounted]);
+    }, []);
 
     async function handleSubmit({name, phone, email, categoryId}){
         const newDataUser = {
@@ -51,7 +51,6 @@ function EditContact(){
             category_id: categoryId
         }
 
-        console.log(newDataUser)
 
         try {
             const { contactUpdated } = await ContactsService.updateContactById(newDataUser, id);

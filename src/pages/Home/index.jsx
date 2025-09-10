@@ -148,7 +148,7 @@ function Home(){
                     <div className={styles.containerEmptyBox}>
                         <img src={emptyBox} alt="Icon empty box" />
                         <p>Você ainda não tem nenhum contato cadastrado!
-                        Clique no botão <strong>”Novo contato”</strong> à cima para cadastrar 
+                        Clique no botão <strong>”Novo contato”</strong> acima para cadastrar 
                         o seu primeiro</p>
                     </div>
                 )}
