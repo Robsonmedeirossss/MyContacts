@@ -22,7 +22,7 @@ function EditContact(){
         async function loadContact(){
             try {
                 
-                const { contact } = await ContactsService.getContactById(id);
+                const contact = await ContactsService.getContactById(id);
 
                 if(isMounted()){
                     setContact(contact);
@@ -43,17 +43,10 @@ function EditContact(){
         loadContact();
     }, []);
 
-    async function handleSubmit({name, phone, email, categoryId}){
-        const newDataUser = {
-            name,
-            phone, 
-            email,
-            category_id: categoryId
-        }
-
+    async function handleSubmit(contact){
 
         try {
-            const { contactUpdated } = await ContactsService.updateContactById(newDataUser, id);
+            const { contactUpdated } = await ContactsService.updateContactById(contact, id);
             setContact(contactUpdated);
             
             addToast({

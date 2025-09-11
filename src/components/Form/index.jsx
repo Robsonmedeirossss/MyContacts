@@ -30,7 +30,7 @@ function Form({buttonLabel, onSubmit, contact = {}, formType}){
             setName(contact.name || '');
             setEmail(contact.email || '');
             setPhone(formatPhone(contact.phone) || '');
-            setCategory(contact.category_id || '');
+            setCategory(contact.category.id || '');
         }
     }, [contact]);
 
@@ -87,7 +87,7 @@ function Form({buttonLabel, onSubmit, contact = {}, formType}){
     async function loadCategories(){
         setIsLoadingCategories(true);
         try {
-            const { categories } = await CategoriesService.getCategories();
+            const categories = await CategoriesService.getCategories();
             
             if(isMounted()){
                 setCategoriesList(categories);

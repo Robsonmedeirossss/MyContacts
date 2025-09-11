@@ -6,17 +6,10 @@ import ContactsService from "../../services/ContactsService";
 
 function NewContact(){
 
-    async function handleCreateContact({name, email, phone, categoryId}){
-
-        const newContact = {
-            name,
-            email,
-            phone,
-            category_id: categoryId
-        }
+    async function handleCreateContact(contact){
         
         try {
-            await ContactsService.createContact(newContact);
+            await ContactsService.createContact(contact);
 
            addToast({type: 'sucess', text: 'O contato foi cadastrado com sucesso!', duration: 3500});
 

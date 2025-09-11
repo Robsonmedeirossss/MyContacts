@@ -37,7 +37,7 @@ function Home(){
             setIsLoading(true);
 
             try {
-                const { contacts } = await ContactsService.listContacts(orderBy);
+                const contacts = await ContactsService.listContacts(orderBy);
                 setContacts(contacts);
                 setHasError(false);
             } catch (error) {
@@ -181,7 +181,7 @@ function Home(){
                                 name={contact.name}
                                 email={contact.email}
                                 phone={contact.phone}
-                                category={contact.category_name}
+                                category={contact.category?.name}
                                 onClickDeletedButton={() => handleOpenModalDeleteContact(contact)}
                             />
                         ))}
