@@ -14,7 +14,7 @@ class ContactMapper{
         return {
             id: contact.id,
             name: contact.name,
-            email: contact.email.toLowerCase(),
+            email: contact.email?.toLowerCase(),
             phone: contact.phone, 
             category: {
                 id: contact.category_id,

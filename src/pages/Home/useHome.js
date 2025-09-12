@@ -90,6 +90,7 @@ function useHome(){
     }
 
     const hasContacts = !hasError && contacts.length > 0;
+    const isListEmpty = contacts.length < 1 && !hasError && !isLoading;
 
     return {    
         contactBeingDeleted,
@@ -107,6 +108,8 @@ function useHome(){
         contacts,
         handleChangeSearchItem,
         handleTryAgain,
+        searchItem,
+        isListEmpty,
 
     }
 }

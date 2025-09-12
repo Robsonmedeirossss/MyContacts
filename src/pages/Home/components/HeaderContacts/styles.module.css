@@ -1,0 +1,41 @@
+
+.headerContacts{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.headerError{
+    justify-content: flex-end;
+}
+
+.headerNoHasContacts{
+    justify-content: center;
+}
+
+.headerError{
+    justify-content: flex-end;
+}
+
+.headerContacts > strong{
+    font-size: 24px;
+    color: var(--text-color-900);
+}
+
+.headerContacts > a{
+    text-decoration: none;
+    color: var(--primary-color-main);
+    border: 2px solid var(--primary-color-main);
+    padding: .6rem;
+    transition: all .2s ease-in;
+}
+
+.headerContacts > a:hover{
+    background-color: var(--primary-color-main);
+    color: var(--white);
+}
+
+.line{
+    color: var(--text-color-200);
+    margin: 16px 0;
+}

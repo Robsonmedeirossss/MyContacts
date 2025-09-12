@@ -1,0 +1,13 @@
+.containerEmptyBox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.containerEmptyBox img{
+    margin-top: 8px;
+}
+
+.containerEmptyBox strong{
+    color: var(--primary-color-dark);
+}
