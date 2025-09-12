@@ -31,10 +31,11 @@ class ContactsService{
         });
     }
 
-    updateContactById(contact, id){
+    async updateContactById(contact, id){
         const body = ContactMapper.toPersistent(contact);
+        const { contactUpdated } = await this.httpClient.put(`/contacts/${id}`, { body });
 
-        return this.httpClient.put(`/contacts/${id}`, { body })
+        return ContactMapper.toDomain(contactUpdated);
     }
 
     deleteContactById(id){
