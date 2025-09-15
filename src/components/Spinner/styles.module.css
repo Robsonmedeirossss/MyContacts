@@ -2,7 +2,7 @@
   border: 4px solid var(--text-color-100);
   border-radius: 50%;
   border-left-color: var(--primary-color-dark);
-  /* position: absolute; */
+  position: absolute;
   animation: spin 1s ease infinite;
 }
 

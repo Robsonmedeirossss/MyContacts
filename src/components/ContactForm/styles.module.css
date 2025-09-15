@@ -11,6 +11,12 @@
     position: relative;
 }
 
+.containerSelect div:nth-child(2){
+    top: 15px;
+    right: 32px;
+    z-index: 1;
+}
+
 .containerSelect select{
     height: 50px;
     background-color: var(--white);

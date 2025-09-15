@@ -2,6 +2,7 @@ import styles from './styles.module.css';
 
 import Button from '../Button'; 
 import ReactPortal from '../ReactPortal';
+import useAnimationUnmount from '../../hooks/useAnimationUnmount';
 
 function Modal({
     title,
@@ -15,18 +16,26 @@ function Modal({
     isLoading,
     }){
 
-    if(!visible){
-        return null;
-    }
+    const { shouldRender, animatedRef } = useAnimationUnmount(visible);
 
     const stylesVariant = type === 'danger'
         ? `${styles.danger}`
         : '';
 
+    const stylesVariantOverlay = visible 
+        ? `${styles.overlay}` 
+        : `${styles.overlay} ${styles.overlayUnmounting}`;
+    
+    const boxModalStyles = visible
+        ? `${styles.boxModal} ${stylesVariant}`
+        : `${styles.boxModal} ${stylesVariant} ${styles.boxModalUnmounting}`;
+
+    if(!shouldRender) return null;
+
     return (
         <ReactPortal containerId="modal-root">
-            <div className={styles.overlay}>
-                <div className={`${styles.boxModal} ${stylesVariant}`}>
+            <div className={stylesVariantOverlay} ref={animatedRef}>
+                <div className={boxModalStyles}>
                 <h2>{title}</h2>
                 {children}
                 <footer>

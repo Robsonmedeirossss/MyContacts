@@ -4,6 +4,7 @@ import Button from "../Button";
 import useContactForm from "./useContactForm";
 
 import styles from './styles.module.css';
+import Spinner from "../Spinner";
 
 
 
@@ -63,8 +64,9 @@ function Form({buttonLabel, onSubmit, contact = {}, formType}){
                         >
                         {categoryObject.name}
                         </option>
-                    ))}
+                    ))} 
                 </select>
+                <Spinner isLoading={isLoadingCategories} isLarge={false} />
             </div>
 
             <Button disabled={!isFormValid || isSubmiting} isLoading={isSubmiting}>{buttonLabel}</Button>
