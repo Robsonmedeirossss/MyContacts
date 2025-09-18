@@ -1,6 +1,5 @@
 import styles from './styles.module.css';
 
-import Card from '../../components/Card';
 import magnifierQuestion from '../../assets/images/icons/magnifier-question.svg';
 
 import Loader from '../../components/Loader';
@@ -13,6 +12,7 @@ import HeaderContacts from './components/HeaderContacts';
 import EmptyBox from './components/EmptyBox';
 import HasError from './components/HasError';
 import ListContacts from './components/ListContacts';
+import EmptyFilteredContacts from './components/EmptyFilteredContacts.jsx';
 
 function Home(){
   
@@ -33,13 +33,13 @@ function Home(){
         handleChangeSearchItem,
         handleTryAgain,
         searchItem,
-        isListEmpty
+        isListEmpty,
+        isFilteredContactEmpty,
         
     } = useHome();
 
     return(
         <>
-            
             <Loader isLoading={isLoading} />  
             
             <section className={styles.contacts}>
@@ -65,7 +65,6 @@ function Home(){
                     />
                 )}
 
-
                 <Modal
                     title={`Tem certeza que deseja remover o contato ${contactBeingDeleted?.name}`}
                     type='danger'
@@ -79,12 +78,8 @@ function Home(){
                     Essa ação não poderá ser desfeita
                 </Modal>
 
-                {(filteredContacts < 1 && !hasError && hasContacts) && (
-                    <div className={styles.containerNoFilteredContacts}>
-                        <img src={magnifierQuestion} alt="Icone magnifier question" />
-                        <span>Nenhum resultado foi encontrado para <strong>”{searchItem}”</strong>.</span>
-                    </div>
-                )}
+                {isFilteredContactEmpty && <EmptyFilteredContacts searchItem={searchItem}/> }
+
             </section>
         </>
     );

@@ -32,11 +32,3 @@
     flex-direction: column;
     gap: 16px;
 }
-
-.containerNoFilteredContacts{
-    display: flex;
-    align-items: flex-start;
-    gap: 24px;
-    margin-top: 32px;
-    word-break: break-word;
-}
